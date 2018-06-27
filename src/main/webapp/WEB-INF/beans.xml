@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- START SNIPPET: beans -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context" 
+	   xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	   xmlns:cxf="http://cxf.apache.org/core"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	   xsi:schemaLocation=" http://www.springframework.org/schemas/beans
+					         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+					         http://cxf.apache.org/jaxws
+					         http://cxf.apache.org/schemas/jaxws.xsd
+					         http://www.springframework.org/schema/context
+    						 http://www.springframework.org/schema/context/spring-context-4.3.xsd
+					         http://cxf.apache.org/jaxrs
+					         http://cxf.apache.org/schemas/jaxrs.xsd">
+   <!-- 
+	  <import resource="classpath:META-INF/cxf/cxf.xml"/>
+	  <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
+	  <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml"/>
+	  <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+	  -->
+
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+	<context:component-scan base-package="com.globant.bootcamp.service" />
+	
+	<!-- https://www.wolfe.id.au/2011/05/22/using-jackson-with-apache-cxf/ -->
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+	
+	<jaxrs:server id="weather" address="/">
+        <jaxrs:serviceBeans>
+            <ref bean="forecastService" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jsonProvider"/>
+        </jaxrs:providers>
+        <!-- 
+        <jaxrs:features>
+            <cxf:logging/>
+        </jaxrs:features>
+         -->
+	</jaxrs:server>
+	
+	<bean id="day" class="com.globant.bootcamp.domain.Day">
+		<property name="atmosphere" ref="atmosphere"></property>
+		<property name="name"></property>
+		<property name="temperature"></property>
+		<property name="thermalSensation" value="0"></property>
+		<property name="wind" ref="wind"></property>
+	</bean>
+	
+	<bean id="atmosphere" class="com.globant.bootcamp.domain.Atmosphere">
+		<property name="humidity" value="0.0"></property>
+		<property name="pressure" value="0.0"></property>
+		<property name="visibility" value="0.0"></property>
+	</bean>
+	
+	<bean id="location" class="com.globant.bootcamp.domain.Location">
+		<property name="country"></property>
+		<property name="name"></property>
+		<property name="region"></property>
+	</bean>
+	
+	<bean id="wind" class="com.globant.bootcamp.domain.Wind">
+		<property name="chill" value="0"></property>
+		<property name="direction" value="0"></property>
+		<property name="speed" value="0"></property>
+	</bean>
+	
+     
+    
+</beans>
+<!-- END SNIPPET: beans -->
