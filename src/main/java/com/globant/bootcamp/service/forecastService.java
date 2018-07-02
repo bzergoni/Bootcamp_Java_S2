@@ -10,6 +10,9 @@ import javax.ws.rs.Produces;
 //import javax.ws.rs.ext.Provider;
 
 import com.globant.bootcamp.domain.*;
+
+//import org.springframework.context.ApplicationContext;
+//import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 
@@ -26,6 +29,8 @@ public class forecastService{
     }
 	
 	private void init() {
+		
+		//ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 		
 		days = new ArrayList<Day>();
 		
